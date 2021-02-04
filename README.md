@@ -2,7 +2,7 @@
 
 ```
 // 脚步在根目录执行，无需到test目录下执行，不然无法调用目录中的内容
-gcc -Wall -c test/hello.c -o test/hello.o
+gcc -Wall -c test/hello.cpp -o test/hello.o
 ar -rv test/libhello.a test/hello.o
 
 调用的时候

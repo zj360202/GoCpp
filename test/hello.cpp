@@ -1,6 +1,9 @@
-//#include <stdio.h> // c
-//#include <stdlib.h>  // c
-#include <iostream> // c++
+#include <stdio.h> // c
+#include <stdlib.h>  // c
+//#include <iostream> // c++ 这个使用不了
+//#include <Windows.h>
+//#include <d3d11.h>
+//#include <dxgi1_2.h>
 #include "hello.h"
 
 int hello(char *name, int age) {
