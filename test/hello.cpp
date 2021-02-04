@@ -1,5 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
+//#include <stdio.h> // c
+//#include <stdlib.h>  // c
+#include <iostream> // c++
 #include "hello.h"
 
 int hello(char *name, int age) {
