@@ -13,6 +13,13 @@ ar -rv test/libhello.a test/hello.o
 #cgo CFLAGS: -I.
 #cgo LDFLAGS: -L./test -lhello   // -L接目录 -l后面接libxxxx.a后面的名字
 */
+import "C"
+```
+
+#### 常见问题
+1. pragma comment []
+```
+//升级msys2就可以了， 主要是gcc必须9.0以上才能编译#pragma comment() 主要的格式
 ```
 
 ### 提交git
