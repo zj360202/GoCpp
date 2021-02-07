@@ -2,7 +2,7 @@
 
 ```
 // 脚步在根目录执行，无需到test目录下执行，不然无法调用目录中的内容
-gcc -Wall -c test/hello.cpp -o test/hello.o
+gcc -Wall -c test/hello.cpp -o test/hello.o  -lstdc++
 ar -rv test/libhello.a test/hello.o
 
 调用的时候
@@ -19,7 +19,7 @@ import "C"
 #### 常见问题
 1. pragma comment []
 ```
-//升级msys2就可以了， 主要是gcc必须9.0以上才能编译#pragma comment() 主要的格式
+//这样的模式是不支持的，可以在系统中找到对应的lib包(此处是d3d11.lib)，然后复制到libhello.a的同级目录,并改名libd3d11.a，在go中通过#cgo LDFLAGS: -L./test -lhello -ld3d11 即可
 ```
 
 ### 提交git
