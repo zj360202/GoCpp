@@ -1,4 +1,6 @@
-# c_add_lib
+# i_add_lib
+#### 概要
+1. golang调用c/c++的时候，c/c++有依赖lib(如果在c/c++中可以直接使用#pragma comment ( lib, "D3D11.lib"))
 
 ```
 // 脚步在根目录执行，无需到test目录下执行，不然无法调用目录中的内容

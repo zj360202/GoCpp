@@ -1,6 +1,6 @@
-# g_has_dir
+# k_callback
 #### 概要
-1. golang与c进行集合类型的交互
+1. golang与c进行callback交互， 通过//export进行对应，可以同时多个export
 #### c中几个常见问题
 1. go中包含的c内容，只能使用// 或 /* .. \*/ (第一个斜杠后面只能有一个*号，否则会语法错误)
 2. import “C” 与注释的c代码之间不能有空格
@@ -9,6 +9,14 @@
 5. CGO后面不能使用注释(//); 否则会出现：invalid flag in #cgo CFLAGS: //
 6. c++中的很多包，需要用#cgo CFLAGS: -Iinclude目录  但是c++包引用的c++类的写法可能不满足c语言的风格，导致引入失败，所以尽量使用c包或封装c包的c++包
 7. 类型上面c与golang的int是相互对应的，不过如果对于数组或其他有序集合来说，golang的int是64位(与系统相关)， c的int是32位的，64位的是long; 所以如果golang是slice的话用int32与c的int进行匹配
+8. c中的struct定义，必须保证typedef struct 后面也需要跟着名称 typedef struct Test{..}Test;
+9. 如果struct包含指针或struct，则当前struct必须在c中初始化，不然在golang中初始化的field将完全或部分是go Memory的，在传给c使用会包cgo argument has Go pointer to Go pointer
+10. CGO: 在c中定义的struct在golang中引用的方式是struct_xxx
+11. golang中定义的方法，要在c中被使用，就需要//export
+12. go中可以同时声明多一个//export
+13. go中//export后面的名称与go的函数名称必须一样
+14. 使用回调函数的地方，必须使用static
+15. go中被//export标记的函数，输入和输出都是cgo类型(C.int, C.bool, C.struct_xx)
 
 #### C、CGO、golang 基础数据对应关系
 |  C   | CGO  | golang |
@@ -35,8 +43,8 @@
 
 ```
 // 脚步在根目录执行，无需到test目录下执行，不然无法调用目录中的内容
-gcc -Wall -c dir_c/hello.cpp -o dir_c/hello.o  -lstdc++
-ar -rv dir_c/libhello.a dir_c/hello.o
+gcc -Wall -c test/hello.cpp -o test/hello.o  -lstdc++
+ar -rv test/libhello.a test/hello.o
 
 调用的时候
 /*
@@ -47,6 +55,12 @@ ar -rv dir_c/libhello.a dir_c/hello.o
 #cgo LDFLAGS: -L./test -lhello   // -L接目录 -l后面接libxxxx.a后面的名字
 */
 import "C"
+```
+
+#### 常见问题
+1. pragma comment []
+```
+//这样的模式是不支持的，可以在系统中找到对应的lib包(此处是d3d11.lib)，然后复制到libhello.a的同级目录,并改名libd3d11.a，在go中通过#cgo LDFLAGS: -L./test -lhello -ld3d11 即可
 ```
 
 ### 提交git
